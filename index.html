@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shlikolata Cafe & Dessert Bar</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --primary: #d1213c;
+      --secondary: #be274a;
+      --text: #ff072c;
+      --muted: #8b545bff;
+      --border: rgba(211, 13, 44, 0.18);
+      --shadow: rgba(211, 13, 44, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 12% 18%, rgba(211, 13, 44, 0.08) 0%, transparent 8%),
+        radial-gradient(circle at 82% 12%, rgba(255, 118, 141, 0.08) 0%, transparent 10%),
+        radial-gradient(circle at 25% 80%, rgba(255, 196, 205, 0.12) 0%, transparent 9%),
+        radial-gradient(circle at 75% 85%, rgba(255, 167, 184, 0.1) 0%, transparent 11%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(255, 72, 108, 0.08) 0%, transparent 8%),
+        radial-gradient(circle at 50% 10%, rgba(255, 119, 148, 0.06) 0%, transparent 8%),
+        radial-gradient(circle at 30% 75%, rgba(255, 192, 203, 0.08) 0%, transparent 9%);
+      z-index: -1;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(211, 13, 44, 0.16);
+      box-shadow: 0 16px 40px rgba(211, 13, 44, 0.08);
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+    }
+
+    .header-video {
+      width: 100%;
+      max-width: 760px;
+      background: #000;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 30px 60px rgba(211, 13, 44, 0.15);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .header-video video {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      background: #000;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .page-wrap {
+      width: min(1180px, 100% - 2rem);
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 1.8rem 0 4rem;
+    }
+
+    .hero {
+      margin: 1.5rem 0 2rem;
+      padding: 2.5rem;
+      background: linear-gradient(180deg, #ffffff 0%, #fff3f6 100%);
+      border-radius: 2rem;
+      border: 1px solid rgba(211, 13, 44, 0.08);
+      box-shadow: 0 35px 70px rgba(211, 13, 44, 0.08);
+      display: grid;
+      gap: 1.75rem;
+    }
+
+    .brand span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.6rem;
+      height: 2.6rem;
+      border-radius: 1rem;
+      background: rgba(211, 13, 44, 0.12);
+      font-size: 1.2rem;
+      box-shadow: 0 14px 30px rgba(211, 13, 44, 0.08);
+      overflow: hidden;
+    }
+
+    .brand span img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .brand-text > div:first-child {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 0.04em;
+    }
+
+    .brand-subtitle {
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    nav {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 0.15rem;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+
+    nav::-webkit-scrollbar {
+      height: 7px;
+    }
+
+    nav::-webkit-scrollbar-thumb {
+      background: rgba(209, 18, 60, 0.3);
+      border-radius: 99px;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: bold;
+      padding: 0.35rem 0.65rem;
+      border-radius: 8px;
+      background: rgba(211, 13, 44, 0.12);
+      transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background: rgba(211, 13, 44, 0.18);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .page-wrap {
+      width: min(1180px, 100% - 2rem);
+      margin: 0 auto;
+      padding: 1.8rem 0 4rem;
+    }
+
+    .hero {
+      margin: 1.5rem 0 2rem;
+      padding: 2.5rem;
+      background: linear-gradient(180deg, #ffffff 0%, #fff3f6 100%);
+      border-radius: 2rem;
+      border: 1px solid rgba(211, 13, 44, 0.08);
+      box-shadow: 0 35px 70px rgba(211, 13, 44, 0.08);
+      display: grid;
+      gap: 1.75rem;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2.8rem, 4vw, 4.6rem);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      color: var(--primary);
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 78ch;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .hero-card {
+      border-radius: 1.6rem;
+      padding: 1.4rem;
+      background: #ffffff;
+      border: 1px solid rgba(211, 13, 44, 0.08);
+      box-shadow: 0 18px 35px rgba(211, 13, 44, 0.05);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 25px 45px rgba(211, 13, 44, 0.1);
+    }
+
+    .hero-card h2 {
+      margin: 0 0 0.4rem;
+      font-size: 1.05rem;
+      color: var(--primary);
+    }
+
+    .hero-card p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    section {
+      margin: 2rem 0;
+      padding: 2rem;
+      background: #ffffff;
+      border-radius: 2rem;
+      border: 1px solid rgba(211, 13, 44, 0.08);
+      box-shadow: 0 28px 50px rgba(211, 13, 44, 0.06);
+    }
+
+    section h2 {
+      margin: 0 0 1rem;
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    section .subtitle {
+      margin: 0 0 1.5rem;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 72ch;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .menu-card {
+      background: #ffffff;
+      padding: 1.3rem;
+      border-radius: 1.5rem;
+      border: 1px solid rgba(211, 13, 44, 0.08);
+      box-shadow: 0 20px 35px rgba(211, 13, 44, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .menu-card h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--primary);
+    }
+
+    .menu-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.5;
+    }
+
+    .menu-card span {
+      display: inline-flex;
+      margin-top: auto;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .item-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(240px, 1fr));
+      grid-auto-rows: minmax(280px, auto);
+      gap: 1.4rem;
+    }
+
+    .item-list li {
+      padding: 0;
+      background: #ffffff;
+      border-radius: 1.35rem;
+      border: 1px solid rgba(211, 13, 44, 0.12);
+      display: flex;
+      flex-direction: column;
+      color: var(--text);
+      box-shadow: 0 20px 40px rgba(211, 13, 44, 0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      overflow: hidden;
+      min-height: 280px;
+    }
+
+    .item-img {
+      width: 100%;
+      height: 160px;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(211, 13, 44, 0.08);
+    }
+
+    .item-list li strong {
+      padding: 1.2rem 1.2rem 0.5rem 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.98rem;
+      margin: 0;
+    }
+
+    .item-list li span {
+      padding: 0 1.2rem 1.2rem 1.2rem;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-top: auto;
+    }
+
+    .item-list li:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 50px rgba(211, 13, 44, 0.12);
+    }
+
+    .section-note {
+      margin-top: 1.2rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      margin: 3rem 0 1rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.85rem;
+      }
+
+      .page-wrap {
+        padding: 1.5rem 1rem 3rem;
+      }
+
+      .hero {
+        padding: 1.5rem;
+      }
+
+      section {
+        padding: 1.5rem;
+      }
+
+      .hero-grid,
+      .menu-grid,
+      .item-list {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        background-image: none;
+      }
+
+      header {
+        padding: 1rem 1rem;
+      }
+
+      .header-video {
+        max-width: 100%;
+        margin: 1rem auto 1.5rem;
+      }
+
+      .header-video video {
+        height: 220px;
+      }
+
+      .page-wrap {
+        width: 100%;
+        padding: 1rem 0.85rem 2rem;
+      }
+
+      .hero {
+        margin: 1rem 0 1.5rem;
+        padding: 1.3rem;
+        border-radius: 1.5rem;
+      }
+
+      .hero h1 {
+        font-size: clamp(2rem, 8vw, 2.6rem);
+      }
+
+      .hero p,
+      section .subtitle,
+      .menu-card p,
+      .section-note,
+      footer {
+        font-size: 0.95rem;
+      }
+
+      .hero-grid,
+      .menu-grid,
+      .item-list {
+        grid-template-columns: repeat(2, minmax(160px, 1fr));
+        gap: 1rem;
+      }
+
+      nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        align-items: stretch;
+        justify-content: stretch;
+      }
+
+      nav a {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: 0.92rem;
+        padding: 0.65rem 0.8rem;
+      }
+
+      .brand {
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      .brand div:first-child {
+        font-size: 1.15rem;
+      }
+
+      .item-list li {
+        min-height: 240px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-video video {
+        height: 180px;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.8rem, 10vw, 2.2rem);
+      }
+
+      .hero p,
+      section .subtitle,
+      .menu-card p,
+      .section-note,
+      footer {
+        font-size: 0.92rem;
+      }
+
+      .item-list li {
+        min-height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span><img src="shph.jpg" alt="logo" /></span>
+      <div class="brand-text">
+        <div>Shlikolata Ranya</div>
+        <div class="brand-subtitle">Dessert & Cafe</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#main">Main</a>
+      <a href="#cups">Cups</a>
+      <a href="#souce">Souce</a>
+      <a href="#smoothies">Smoothie & Shakes</a>
+      <a href="#drinks">Drinks</a>
+      <a href="#redbull">RedBull</a>
+      <a href="#hot-drinks">Hot Coffee</a>
+      <a href="#iced-drinks">Iced Coffee</a>
+      <a href="#ice-tea">Ice Tea</a>
+    </nav>
+  </header>
+
+  <div class="header-video" style="margin: 1.5rem auto 2rem;">
+    <video autoplay muted loop playsinline controls preload="metadata" style="border-radius: 1.5rem;">
+      <source src="shlikolata.MOV" type="video/mp4">
+      <source src="shlikolata.MOV" type="video/quicktime">
+      Your browser does not support the video tag. Please use a modern browser or convert your video to MP4.
+    </video>
+  </div>
+
+  <main class="page-wrap">
+    <section id="main">
+      <h2>Main </h2>
+      
+      <ul class="item-list">
+        <li data-img="shb.jpg"><strong>Shlikolata box</strong><span>6,000</span></li>
+        <li data-img="sb.jpg"><strong>Summer Box</strong><span>6,000</span></li>
+        <li data-img="pasta.jpg"><strong>Pasta</strong><span>6,000</span></li>
+        <li data-img="pb.jpg"><strong>Pasta Brownie</strong><span>6,000</span></li>
+        <li data-img="crepe.jpg"><strong>Crepe</strong><span>6,000</span></li>
+        <li data-img="crepeb.jpg"><strong>Crepe Brownie</strong><span>6,000</span></li>
+        <li data-img="wafle.jpg"><strong>Shlikolata Waffle</strong><span>6,000</span></li>
+        <li data-img="burger.jpg"><strong>Shlikolata Burger</strong><span>6,000</span></li>
+        <li data-img="tender.jpg"><strong>Shlikolata Tenders</strong><span>6,000</span></li>
+        <li data-img="nachos.jpg"><strong>Shlikolata Nachos</strong><span>5,000</span></li>
+      </ul>
+      
+    </section>
+
+    <section id="cups">
+      <h2>Cups</h2>
+      
+      <ul class="item-list">
+        <li data-img="mix.jpg"><strong>Shlikolata Mix Large</strong><span>5,000</span></li>
+        <li data-img="mix.jpg"><strong>Shlikolata Mix Small</strong><span>4,000</span></li>
+        <li data-img="shlic.jpg"><strong>Shlicake small</strong><span>4,000</span></li>
+        <li data-img="shlic.jpg"><strong>Shlicake large</strong><span>5,000</span></li>
+        <li data-img="chocko.jpg"><strong>Chocopops small</strong><span>3,000</span></li>
+        <li data-img="chocko.jpg"><strong>Chocopops large</strong><span>4,000</span></li>
+        <li data-img="ss.jpg"><strong>Special Strawberry</strong><span>5,000</span></li>
+        <li data-img="sbanana.jpg"><strong>Special Banana</strong><span>5,000</span></li>
+        <li data-img="schocko.jpg"><strong>Special chocopops small</strong><span>4,000</span></li>
+        <li data-img="schocko.jpg"><strong>Special chocopops large</strong><span>5,000</span></li>
+        <li data-img="straw.jpg"><strong>Strawberry only small</strong><span>4,000</span></li>
+        <li data-img="straw.jpg"><strong>Strawberry only large</strong><span>5,000</span></li>
+        <li data-img="vice.jpg"><strong>Vanilla Waffle Icecream</strong><span>5,000</span></li>
+        <li data-img="cice.jpg"><strong>Chocolate Waffle Icecream</strong><span>5,000</span></li>
+      </ul>
+    </section>
+
+    <section id="souce">
+      <h2>Souce</h2>
+      
+      <ul class="item-list">
+        <li data-img="4ONZchoclate.jpg"><strong>4oz chocolate</strong><span>1,000</span></li>
+        <li data-img="4ONZlotus.jpg"><strong>4oz lotus</strong><span>1,000</span></li>
+        <li data-img="4ONZpistachio.jpg"><strong>4oz pistachio</strong><span>2,000</span></li>
+
+      </ul>
+    </section>
+
+    <section id="smoothies">
+      <h2>Smoothie & Shakes</h2>
+      
+      <ul class="item-list">
+        <li data-img="strowbana.jpg"><strong>Strawberry Banana Smoothie</strong><span>4,000</span></li>
+        <li data-img="mango.jpg"><strong>Mango Peach Smoothie</strong><span>4,000</span></li>
+        <li data-img="kunafash.jpg"><strong>Pistachio Kunafa Shake</strong><span>5,000</span></li>
+        <li data-img="cshake.jpg"><strong>Shlikolata Shake</strong><span>5,000</span></li>
+        
+      </ul>
+    </section>
+
+    <section id="drinks">
+      <section id="drinks">
+      <h2>Drinks</h2>
+      <ul class="item-list">
+        <li data-img="Redvibe.jpg"><strong>Red vibe</strong><span>3,500</span></li>
+        <li data-img="CocoPine.jpg"><strong>Cocopine</strong><span>3,500</span></li>
+        <li data-img="OrangeJuice.jpg"><strong>Orange juice</strong><span>3,500</span></li>
+        <li data-img="Elixir.jpg"><strong>Elixir</strong><span>4,000</span></li>
+        <li data-img="MilkBerry.jpg"><strong>Milk berry</strong><span>3,500</span></li>
+        <li data-img="SummerPeach.jpg"><strong>Summer peach</strong><span>3,500</span></li>
+        <li data-img="VioMilk.jpg"><strong>Vio milk</strong><span>3,500</span></li>
+        
+      </ul>
+    </section>
+
+    <section id="redbull">
+      <h2>RedBull</h2>
+      
+      <ul class="item-list">
+        <li data-img="Redbullblueocean.jpg"><strong>RedBull Blue ocean</strong><span>4,000</span></li>
+        <li data-img="RedbullBlueberry.jpg"><strong>RedBull Blueberry</strong><span>4,000</span></li>
+        <li data-img="RedbullMagic.jpg"><strong>RedBull Magic</strong><span>5,000</span></li>
+        <li data-img="RedbullMexican.jpg"><strong>RedBull Mexican</strong><span>4,000</span></li>
+        <li data-img="RedbullNar.jpg"><strong>RedBull Nar</strong><span>4,000</span></li>
+        <li data-img="RedbullPassionfruit.jpg"><strong>RedBull Passion fruit</strong><span>4,000</span></li>
+        <li data-img="RedbullRoseberry.jpg"><strong>RedBull Rose berry</strong><span>4,000</span></li>
+        
+      </ul>
+    </section>
+
+    <section id="hot-drinks">
+      <h2>Hot Drinks</h2>
+      
+      <ul class="item-list">
+        <li data-img="Singleespresso.jpg"><strong>Single espresso</strong><span>2,000</span></li>
+        <li data-img="Singleespresso.jpg"><strong>Double espresso</strong><span>3,000</span></li>
+        <li data-img="Macchiato.jpg"><strong>Macchiato</strong><span>3,000</span></li>
+        <li data-img="Flatwhite.jpg"><strong>cortado</strong><span>3,000</span></li>
+        <li data-img="Flatwhite.jpg"><strong>Flat white</strong><span>3,000</span></li>
+        <li data-img="Cappuccino.jpg"><strong>Cappuccino</strong><span>3,000</span></li>
+        <li data-img="Hotchoclate.jpg"><strong>Hot chocolate</strong><span>3,500</span></li>
+        <li data-img="Americano.jpg"><strong>Americano</strong><span>3,000</span></li>
+        <li data-img="Latte.jpg"><strong>Latte</strong><span>3,000</span></li>
+        <li data-img="Latte.jpg"><strong>Spanish latte</strong><span>3,500</span></li>
+        <li data-img="Bountylatte.jpg"><strong>Bounty latte</strong><span>3,500</span></li>
+        <li data-img="Hazelnutlatte.jpg"><strong>Hazelnut latte</strong><span>3,500</span></li>
+        <li data-img="Roselatte.jpg"><strong>Rose latte</strong><span>3,500</span></li>
+        <li data-img="Caramellatte.jpg"><strong>Caramel latte</strong><span>3,500</span></li>
+        <li data-img="Latte.jpg"><strong>Shlikolate latte</strong><span>4,000</span></li>
+        <li data-img="Vanellalatte.jpg"><strong>Vanilla latte</strong><span>3,500</span></li>
+      </ul>
+    </section>
+
+    <section id="iced-drinks">
+      <h2>Iced Drinks</h2>
+      
+      <ul class="item-list">
+        <li data-img="Icedlatte.jpg"><strong>Iced Latte</strong><span>3,000</span></li>
+        <li data-img="Icedpistachiolatte.jpg"><strong>Iced Pistachio latte</strong><span>4,000</span></li>
+        <li data-img="icedblueberrylatte.jpg"><strong>Iced Blueberry latte</strong><span>3,500</span></li>
+        <li data-img="Icedroselatte.jpg"><strong>Iced Rose latte</strong><span>3,500</span></li>
+        <li data-img="Icedbountylatte.jpg"><strong>Iced Bounty latte</strong><span>3,500</span></li>
+        <li data-img="Icedvannelalatte.jpg"><strong>Iced Vanilla latte</strong><span>3,500</span></li>
+        <li data-img="Icedcaramellatte.jpg"><strong>Iced Caramel latte</strong><span>3,500</span></li>
+        <li data-img="Icedhazelnutlatte.jpg"><strong>Iced Hazelnut latte</strong><span>3,500</span></li>
+        <li data-img="Icedbluelatte.jpg"><strong>Iced Blue latte</strong><span>3,500</span></li>
+        <li data-img="Icedlatte.jpg"><strong>Iced Spanish latte</strong><span>3,500</span></li>
+        <li data-img="Icedlatte.jpg"><strong>Iced Shlikolate latte</strong><span>4,000</span></li>
+        <li data-img="Coldchoclate.jpg"><strong>Cold chocolate</strong><span>3,500</span></li>
+        <li data-img="Icedamericanlatte.jpg"><strong>Iced Americano</strong><span>3,000</span></li>
+        <li data-img="Affogato.jpg"><strong>Affogato</strong><span>3,500</span></li>
+        <li data-img="espressoorange.jpg"><strong>Orange espresso</strong><span>3,500</span></li>
+      </ul>
+    </section>
+
+    <section id="ice-tea">
+      <h2>Ice Tea</h2>
+      <ul class="item-list">
+        <li data-img="LemonIcetea.jpg"><strong>Lemon Ice Tea</strong><span>3,000</span></li>
+        <li data-img="PeachIceTea.jpg"><strong>Peach Ice Tea</strong><span>3,000</span></li>
+        <li data-img="mixtea.jpg"><strong>Mixed ice Tea</strong><span>3,500</span></li>
+        
+      </ul>
+    </section>
+
+    <footer>
+      Congratulations. You found the bottom of the menu. The calories are now hiding from you 😁🍓
+    </footer>
+  </main>
+  <script>
+    const colors = ['ffbac2', 'ff9fb8', 'ff8aa4', 'ff6f85', 'ef5378', 'd92f5f', 'c31c4a', 'a8113d', '870f33', '6d0b2b'];
+    document.querySelectorAll('.item-list li').forEach((item, index) => {
+      if (item.querySelector('.item-img')) return;
+      const imagePath = item.dataset.img?.trim();
+      const img = document.createElement('div');
+      img.className = 'item-img';
+      if (imagePath) {
+        img.style.backgroundImage = `url('${imagePath}')`;
+      } else {
+        const title = item.querySelector('strong')?.textContent.trim() || 'Item';
+        const safeText = title.replace(/[^a-zA-Z0-9 ]/g, '').slice(0, 20);
+        const color = colors[index % colors.length];
+        const svg = `<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 180"><rect width="400" height="180" fill="#${color}"/><path d="M200 38c-30 0-56 20-56 50 0 27 20 60 50 80 30-20 50-53 50-80 0-30-26-50-50-50z" fill="#e73f6d"/><ellipse cx="200" cy="70" rx="18" ry="10" fill="#8ccf5f"/><ellipse cx="180" cy="52" rx="7" ry="4" fill="#8ccf5f"/><ellipse cx="220" cy="52" rx="7" ry="4" fill="#8ccf5f"/><text x="50%" y="165" fill="#ffffff" font-family="Segoe UI, sans-serif" font-size="20" text-anchor="middle">${safeText}</text></svg>`;
+        const encoded = encodeURIComponent(svg).replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29');
+        img.style.backgroundImage = `url('data:image/svg+xml,${encoded}')`;
+      }
+      item.insertBefore(img, item.firstChild);
+    });
+  </script>
+</body>
+</html>
